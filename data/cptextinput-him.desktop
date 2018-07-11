@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=inpu_nc_common_menu_tools_settings
+Type=HildonControlPanelPlugin
+X-control-panel-plugin=libcptextinput.so
+Icon=control_pen_input
+X-Text-Domain=osso-applet-textinput

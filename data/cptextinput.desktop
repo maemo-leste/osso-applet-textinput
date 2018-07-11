@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=tein_ti_text_input_title
+Comment=Change the text input settings
+Type=HildonControlPanelPlugin
+X-control-panel-plugin=libcptextinput.so
+Categories=personalisation
+Icon=control_pen_input
+X-Text-Domain=osso-applet-textinput
