@@ -477,7 +477,10 @@ create_main_dialog(GtkWindow *parent, osso_context_t *osso)
     for (l = plugins ; l; l = l->next)
     {
       if (l->data)
-        hildon_im_settings_plugin_save_data(l->data, 0);
+      {
+        hildon_im_settings_plugin_save_data(
+            ((HildonIMSettingsPluginInfo *)l->data)->plugin, 0);
+      }
     }
 
     set_language_settings(0, selected_primary_language);
