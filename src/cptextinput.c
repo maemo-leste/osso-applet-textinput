@@ -70,9 +70,9 @@ create_other_settings(GtkWidget *vbox)
   {
     if (l->data)
     {
-      HildonIMSettingsPlugin *p = l->data;
+      HildonIMSettingsPluginInfo *info = l->data;
       GtkWidget *widget = hildon_im_settings_plugin_create_widget(
-            p, HILDON_IM_SETTINGS_OTHER, NULL, &weight);
+            info->plugin, HILDON_IM_SETTINGS_OTHER, NULL, &weight);
 
       if (widget)
       {
@@ -200,14 +200,12 @@ create_language_widget(gint language)
   GtkWidget *picker;
   GtkWidget *touch_selector;
   GtkWidget *hbox;
-  GtkTreeIter *selected_iter;
   GtkTreeIter iter;
   gint weight;
 
   picker = hildon_picker_button_new(HILDON_SIZE_FINGER_HEIGHT,
                                     HILDON_BUTTON_ARRANGEMENT_VERTICAL);
   hildon_button_set_alignment(HILDON_BUTTON(picker), 0.0, 0.5, 1.0, 0.0);
-
 
   if (language)
     selected_language = selected_secondary_language;
@@ -223,12 +221,12 @@ create_language_widget(gint language)
   {
     if (l->data)
     {
-      HildonIMSettingsPlugin *plugin = l->data;
+      HildonIMSettingsPluginInfo *info = l->data;
       HildonIMSettingsCategory where =
           language ? HILDON_IM_SETTINGS_SECONDARY_LANGUAGE_SETTINGS_WIDGET :
                      HILDON_IM_SETTINGS_PRIMARY_LANGUAGE_SETTINGS_WIDGET;
       GtkWidget *widget = hildon_im_settings_plugin_create_widget(
-            plugin, where, NULL, &weight);
+            info->plugin, where, NULL, &weight);
 
       if (widget)
       {
@@ -289,12 +287,11 @@ create_language_widget(gint language)
   {
     GtkListStore *list_store =
         gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_STRING);
+    GtkTreeIter *selected_iter = NULL;
 
     available_languages = g_slist_sort(available_languages,
                                        (GCompareFunc)compare_languages);
     active_language = get_language_settings(language);
-
-    selected_iter = 0;
 
     for (l = available_languages; l; l = l->next)
     {
@@ -348,6 +345,7 @@ create_language_widget(gint language)
     g_signal_connect(G_OBJECT(picker), "value-changed",
                      G_CALLBACK(picker_value_changed_cb),
                      GINT_TO_POINTER(language));
+
     if (selected_iter)
     {
       hildon_touch_selector_select_iter(HILDON_TOUCH_SELECTOR(touch_selector),
@@ -424,9 +422,9 @@ create_main_dialog(GtkWindow *parent, osso_context_t *osso)
       {
         if (plugin->data)
         {
-          HildonIMSettingsPlugin *p = plugin->data;
+          HildonIMSettingsPluginInfo *info = plugin->data;
           GtkWidget *widget = hildon_im_settings_plugin_create_widget(
-                p, vtab->category, size_group, &weight);
+                info->plugin, vtab->category, size_group, &weight);
 
           if (widget)
           {
