@@ -437,6 +437,8 @@ create_main_dialog(GtkWindow *parent, osso_context_t *osso)
         }
       }
 
+      g_object_unref (G_OBJECT (size_group));
+
       plugin_widgets = g_slist_sort(plugin_widgets,
                                     (GCompareFunc)plugin_widgets_compare);
 
